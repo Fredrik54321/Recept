@@ -1,0 +1,147 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #444;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            margin: 0 10px;
+            text-align: center;
+        }
+
+        nav a:hover {
+            background-color: #575757;
+            border-radius: 5px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .back-button {
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .logout-button {
+            background-color: #dc3545;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2>Välkommen, {{request.user}}</h2>
+    </header>
+
+    <nav>
+        <a href="{% url 'search-users' %}">Sök Användare</a>
+        <a href="{% url 'task-create' %}">Lägg till Recept</a>
+        <a href="{% url 'friend_list' %}">Mina vänner</a>
+    </nav>
+
+    <div class="container">
+        <p>Du har <i>{{count}} maträtt{{count|pluralize:"er"}}</i> i listan.</p>
+
+        {% if request.user.is_authenticated %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn logout-button">Logga ut</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn">Logga in</a>
+        {% endif %}
+        <br>
+
+        <h2>Slumpa en maträtt</h2>
+        <form method="get">
+            <button type="submit" class="btn">Slumpa</button>
+        </form>
+
+        {% if random_task %}
+            <p>Slumpad maträtt: <strong>{{random_task.title}}</strong></p>
+        {% endif %}
+
+        <hr>
+        <form method="get">
+            <input type="text" name="Sök-ruta" value="{{ search_input }}" placeholder="Sök efter dina recept">
+            <button type="submit" class="btn">Sök</button>
+        </form>
+
+        <table>
+            <tr>
+                <th>Titel</th>
+                <th>Recept</th>
+                <th>Ändra</th>
+                <th>Ta bort</th>
+            </tr>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td><a href="{% url 'task' task.id %}" class="btn">Recept</a></td>
+                    <td><a href="{% url 'task-update' task.id %}" class="btn">Ändra</a></td>
+                    <td><a href="{% url 'task-delete' task.id %}" class="btn logout-button">Ta bort</a></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4"><h3>Tomt</h3></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
+{% endblock %}

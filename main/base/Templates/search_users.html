@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h2>Sök efter användare</h2>
+
+    <form method="get">
+        <input type="text" name="Sök-ruta" value="{{ search_input }}" placeholder="Sök användare">
+        <button type="submit" class="btn">Sök</button>
+    </form>
+
+    <h3>Användare</h3>
+
+    <style>
+        .btn {
+            margin: 10px; /* Lägg till mellanrum mellan knappar */
+        }
+        ul li {
+            margin-bottom: 10px; /* Lägg till mellanrum mellan varje listobjekt */
+        }
+    </style>
+
+    {% if users %}
+        <ul>
+            {% for user in users %}
+                <li>
+                    <a href="{% url 'user-profile' user.username %}">
+                        <button class="add-friend-btn">{{ user.username }}</button>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ingen användare hittades.</p>
+    {% endif %}
+
+    <a href="{% url 'task' %}" class="btn">Tillbaka</a>
+
+{% endblock %}

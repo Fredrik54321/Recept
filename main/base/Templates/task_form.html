@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+{% block content %}
+
+
+<h3>Lägg till recept</h3>
+
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Lägg till" class="add-friend-btn">
+    <br><br>
+    <a href="{% url 'task' %}" class="btn"> Tillbaka </a>
+</form>
+
+{% endblock content %}

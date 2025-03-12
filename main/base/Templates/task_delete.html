@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+{% block content %}
+
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Är du säker på att du vill ta bort denna maträtt? {{task}}</p>
+        <button type="submit" class="btn">Ta bort</button>
+        <br><br>
+        <a href="{% url 'task' %}" class="btn">Tillbaka</a>
+    </form>
+{% endblock content %}

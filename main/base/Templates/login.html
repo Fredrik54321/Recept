@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logga in</title>
+</head>
+<body>
+<h1> Dela dina recept </h1>
+<h3> Logga in </h3>
+<form method="post">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit" class="btn">Logga in</button>
+</form>
+
+<p> Har du ingen användare?</p>
+<form action="{% url 'register' %}">
+
+<button class="btn">Registrera användare</button>
+</form>
+
+
+</body>
+</html>
+
+{% endblock content %}

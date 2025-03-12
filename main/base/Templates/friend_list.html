@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% block content %}
+
+
+<h2>Mina vänner</h2>
+<ul>
+    {% for friendship in friends %}
+        <li>
+            <a href="{% url 'user-profile' username=friendship.friend.username %}" class="add-friend-btn">
+                {{ friendship.friend.username }}
+            </a>
+            <!-- Lägg till en knapp för att ta bort vännen -->
+            <a href="{% url 'remove-friend' username=friendship.friend.username %}" class="remove-friend-btn">
+                Ta bort vän
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+<body>
+ <a href="{% url 'task' %}" class="btn">Tillbaka</a>
+</body>
+
+{% endblock content %}

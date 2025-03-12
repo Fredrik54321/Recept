@@ -1,0 +1,12 @@
+<h2>Din lista över sparade recept</h2>
+<ul>
+    {% for saved_recipe in saved_recipes %}
+        <li>
+            <a href="{% url 'task' saved_recipe.recipe.id %}">
+                {{ saved_recipe.recipe.title }}
+            </a>
+        </li>
+    {% empty %}
+        <p>Du har inga sparade recept än.</p>
+    {% endfor %}
+</ul>

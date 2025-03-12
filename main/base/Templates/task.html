@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+{% block content %}
+
+
+<h1> {{tasks}} </h1>
+<p>{{tasks.description|linebreaksbr}}</p>
+
+<button class="btn" onclick="window.history.back()">Tillbaka</button>
+<br>
+
+
+
+{% endblock content %}
